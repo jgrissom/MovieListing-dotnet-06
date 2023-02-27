@@ -107,8 +107,35 @@ else
         {
           // generate movie id - use max value in MovieIds + 1
           UInt64 movieId = MovieIds.Max() + 1;
-          // display movie id, title
-          Console.WriteLine($"{movieId}, {movieTitle}");
+          // input genres
+          List<string> genres = new List<string>();
+          string? genre;
+          do
+          {
+            // ask user to enter genre
+            Console.WriteLine("Enter genre (or done to quit)");
+            // input genre
+            genre = Console.ReadLine();
+            if (genre is not null)
+            {
+              // if user enters "done" do not add it to list
+              if (genre != "done")
+              {
+                  genres.Add(genre);
+              }
+            }
+          } while (genre != "done");
+          // specify if no genres are entered
+          if (genres.Count == 0)
+          {
+            genres.Add("(no genres listed)");
+          }
+          // use "|" as delimeter for genres
+          string genresString = string.Join("|", genres);
+          // if there is a comma(,) in the title, wrap it in quotes
+          movieTitle = movieTitle.IndexOf(',') != -1 ? $"\"{movieTitle}\"" : movieTitle;
+          // display movie id, title, genres
+          Console.WriteLine($"{movieId},{movieTitle},{genresString}");
         }
       }
     }
