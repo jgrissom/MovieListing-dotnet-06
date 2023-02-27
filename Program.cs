@@ -1,4 +1,5 @@
 ﻿using NLog;
+using System.Linq;
 
 // See https://aka.ms/new-console-template for more information
 string path = Directory.GetCurrentDirectory() + "\\nlog.config";
@@ -89,6 +90,9 @@ else
     if (choice == "1")
     {
       // Add Movie
+      // first, generate movie id - use max value in MovieIds + 1
+      UInt64 movieId = MovieIds.Max() + 1;
+      Console.WriteLine($"Movie Id: {movieId}");
     }
     else if (choice == "2")
     {
