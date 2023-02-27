@@ -37,19 +37,35 @@ else
         int idx = line.IndexOf('"');
         if (idx == -1)
         {
-          // no quote = no comma in movie title
-          // movie details are separated with comma(,)
-          string[] movieDetails = line.Split(',');
-          // 1st array element contains movie id
-          MovieIds.Add(UInt64.Parse(movieDetails[0]));
-          // 2nd array element contains movie title
-          MovieTitles.Add(movieDetails[1]);
-          // 3rd array element contains movie genre(s)
-          // replace "|" with ", "
-          MovieGenres.Add(movieDetails[2].Replace("|", ", "));
+          // // no quote = no comma in movie title
+          // // movie details are separated with comma(,)
+          // string[] movieDetails = line.Split(',');
+          // // 1st array element contains movie id
+          // MovieIds.Add(UInt64.Parse(movieDetails[0]));
+          // // 2nd array element contains movie title
+          // MovieTitles.Add(movieDetails[1]);
+          // // 3rd array element contains movie genre(s)
+          // // replace "|" with ", "
+          // MovieGenres.Add(movieDetails[2].Replace("|", ", "));
+        }
+        else
+        {
+          // quote = comma in movie title
+          // extract the movieId
+          MovieIds.Add(UInt64.Parse(line.Substring(0, idx - 1)));
+          // remove movieId and first quote from string
+          line = line.Substring(idx + 1);
+          // find the next quote
+          idx = line.IndexOf('"');
+          // extract the movieTitle
+          MovieTitles.Add(line.Substring(0, idx));
+          // remove title and last comma from the string
+          line = line.Substring(idx + 2);
+          // replace the "|" with ", "
+          MovieGenres.Add(line.Replace("|", ", "));
         }
       }
-    }
+    } 
     sr.Close();
   }
   catch (Exception ex)
