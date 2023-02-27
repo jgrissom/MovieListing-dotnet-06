@@ -134,8 +134,16 @@ else
           string genresString = string.Join("|", genres);
           // if there is a comma(,) in the title, wrap it in quotes
           movieTitle = movieTitle.IndexOf(',') != -1 ? $"\"{movieTitle}\"" : movieTitle;
-          // display movie id, title, genres
-          Console.WriteLine($"{movieId},{movieTitle},{genresString}");
+          // create file from data
+          StreamWriter sw = new StreamWriter(file, true);
+          sw.WriteLine($"{movieId},{movieTitle},{genresString}");
+          sw.Close();
+          // add movie details to Lists
+          MovieIds.Add(movieId);
+          MovieTitles.Add(movieTitle);
+          MovieGenres.Add(genresString);
+          // log transaction
+          logger.Info("Movie id {Id} added", movieId);
         }
       }
     }
