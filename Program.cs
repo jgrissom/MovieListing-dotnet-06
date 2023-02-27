@@ -90,9 +90,27 @@ else
     if (choice == "1")
     {
       // Add Movie
-      // first, generate movie id - use max value in MovieIds + 1
-      UInt64 movieId = MovieIds.Max() + 1;
-      Console.WriteLine($"Movie Id: {movieId}");
+      // ask user to input movie title
+      Console.WriteLine("Enter the movie title");
+      // input title
+      string? movieTitle = Console.ReadLine();
+
+      if (movieTitle is not null)
+      {
+        // check for duplicate title
+        List<string> LowerCaseMovieTitles = MovieTitles.ConvertAll(t => t.ToLower());
+        if (LowerCaseMovieTitles.Contains(movieTitle.ToLower()))
+        {
+          logger.Info("Duplicate movie title {Title}", movieTitle);
+        }
+        else
+        {
+          // generate movie id - use max value in MovieIds + 1
+          UInt64 movieId = MovieIds.Max() + 1;
+          // display movie id, title
+          Console.WriteLine($"{movieId}, {movieTitle}");
+        }
+      }
     }
     else if (choice == "2")
     {
