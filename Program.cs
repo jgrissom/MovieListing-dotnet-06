@@ -31,7 +31,7 @@ else
     while (!sr.EndOfStream)
     {
       string? line = sr.ReadLine();
-      if (line is not null)
+      if (!string.IsNullOrEmpty(line))
       {
         // first look for quote(") in string
         // this indicates a comma(,) in movie title
@@ -66,6 +66,10 @@ else
           MovieGenres.Add(line.Replace("|", ", "));
         }
       }
+      else
+      {
+        logger.Error("Line in data file is null");
+      }
     } 
     sr.Close();
   }
@@ -95,7 +99,7 @@ else
       // input title
       string? movieTitle = Console.ReadLine();
 
-      if (movieTitle is not null)
+      if (!string.IsNullOrEmpty(movieTitle))
       {
         // check for duplicate title
         List<string> LowerCaseMovieTitles = MovieTitles.ConvertAll(t => t.ToLower());
@@ -116,13 +120,15 @@ else
             Console.WriteLine("Enter genre (or done to quit)");
             // input genre
             genre = Console.ReadLine();
-            if (genre is not null)
+            if (!string.IsNullOrEmpty(genre))
             {
               // if user enters "done" do not add it to list
               if (genre != "done")
               {
                   genres.Add(genre);
               }
+            } else {
+              logger.Error("You must enter a genre");
             }
           } while (genre != "done");
           // specify if no genres are entered
@@ -145,6 +151,10 @@ else
           // log transaction
           logger.Info("Movie id {Id} added", movieId);
         }
+      }
+      else 
+      {
+        logger.Error("You must enter a movie title");
       }
     }
     else if (choice == "2")
