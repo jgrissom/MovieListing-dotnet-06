@@ -76,6 +76,15 @@ else
     else if (choice == "2")
     {
       // Display All Movies
+      // loop thru Movie Lists
+      for (int i = 0; i < MovieIds.Count; i++)
+      {
+        // display movie details
+        Console.WriteLine($"Id: {MovieIds[i]}");
+        Console.WriteLine($"Title: {MovieTitles[i]}");
+        Console.WriteLine($"Genre(s): {MovieGenres[i]}");
+        Console.WriteLine();
+      }
     }
   } while (choice == "1" || choice == "2");
 }
